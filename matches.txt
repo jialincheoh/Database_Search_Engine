@@ -1,0 +1,161 @@
+--------
+C, 4 bonds
+--C, 3 bonds
+----C, 3 bonds
+------C, 3 bonds
+--------C, 3 bonds
+----------H, 0 bonds
+----------H, 0 bonds
+----------H, 0 bonds
+--------H, 0 bonds
+--------H, 0 bonds
+------H, 0 bonds
+------H, 0 bonds
+----H, 0 bonds
+----H, 0 bonds
+--H, 0 bonds
+--H, 0 bonds
+--H, 0 bonds
+--------
+C, 4 bonds
+--C, 3 bonds
+----C, 3 bonds
+------C, 3 bonds
+--------C, 3 bonds
+----------H, 0 bonds
+----------H, 0 bonds
+----------H, 0 bonds
+--------H, 0 bonds
+--------H, 0 bonds
+------H, 0 bonds
+------H, 0 bonds
+----H, 0 bonds
+----H, 0 bonds
+--H, 0 bonds
+--H, 0 bonds
+--H, 0 bonds
+C does not match H
+H does not match C
+C does not match H
+H does not match C
+H does not match C
+C does not match H
+H does not match C
+C does not match H
+C does not match H
+H does not match C
+C does not match H
+H does not match C
+H does not match C
+C does not match H
+H does not match C
+C does not match H
+C does not match H
+H does not match C
+C does not match H
+H does not match C
+H does not match C
+C does not match H
+H does not match C
+C does not match H
+C does not match H
+H does not match C
+C does not match H
+H does not match C
+H does not match C
+C does not match H
+H does not match C
+C does not match H
+C does not match H
+H does not match C
+C does not match H
+H does not match C
+H does not match C
+C does not match H
+H does not match C
+C does not match H
+C does not match H
+H does not match C
+C does not match H
+H does not match C
+H does not match C
+C does not match H
+H does not match C
+C does not match H
+C does not match H
+H does not match C
+C does not match H
+H does not match C
+H does not match C
+C does not match H
+H does not match C
+C does not match H
+C does not match H
+H does not match C
+C does not match H
+H does not match C
+H does not match C
+C does not match H
+H does not match C
+C does not match H
+C does not match H
+H does not match C
+C does not match H
+H does not match C
+H does not match C
+C does not match H
+H does not match C
+C does not match H
+C does not match H
+H does not match C
+C does not match H
+H does not match C
+H does not match C
+C does not match H
+H does not match C
+C does not match H
+C does not match H
+H does not match C
+C does not match H
+H does not match C
+H does not match C
+C does not match H
+H does not match C
+C does not match H
+C does not match H
+H does not match C
+C does not match H
+H does not match C
+H does not match C
+C does not match H
+H does not match C
+C does not match H
+C does not match H
+H does not match C
+C does not match H
+H does not match C
+H does not match C
+C does not match H
+H does not match C
+C does not match H
+C does not match H
+H does not match C
+C does not match H
+H does not match C
+H does not match C
+C does not match H
+H does not match C
+C does not match H
+C does not match H
+H does not match C
+C does not match H
+H does not match C
+C does not match H
+H does not match C
+H does not match C
+C does not match H
+H does not match C
+C does not match H
+H does not match C
+C does not match H
+NOT an isomer

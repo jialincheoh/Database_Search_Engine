@@ -1,0 +1,21 @@
+1. ensure you have the two input files you want to check in the same (isomers) directory
+
+2. edit isomers.py at the top you will see:
+
+INPUT_FILE_1 and INPUT_FILE_2
+
+give them the right values (name of the two input files)
+
+3. open terminal and get into correct directory:
+
+cd /Users/jialincheoh/Documents/isomers
+
+4. in terminal, run the program (this is the more restrictive check)
+
+python3 isomers.py
+
+-------
+
+The less restrictive check (only checks atom counts):
+
+python3 structural_isomers.py
