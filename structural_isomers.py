@@ -12,11 +12,18 @@ def get_atoms(filename):
 	return input_atoms
 
 
-input_data1 = get_atoms('isomer1')
+def is_isomer(filename1, filename2):
+	input_data1 = get_atoms(filename1)
+	input_data2 = get_atoms(filename2)
 
-input_data2 = get_atoms('isomer2')
+	return input_data1 == input_data2
 
-if input_data1 == input_data2:
-	print('is a structural isomer')
-else:
-	print('NOT an isomer')
+
+if __name__ == "__main__":
+
+	is_iso = is_isomer('isomer1', 'isomer2')
+
+	if is_iso:
+		print('is a structural isomer')
+	else:
+		print('NOT an isomer')

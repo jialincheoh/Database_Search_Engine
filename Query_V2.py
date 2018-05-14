@@ -105,12 +105,15 @@ def get_coord_by_frag_id(id):
 def get_coord_from_frag_id_array(group,password,chemical_form):
     
     frag_list=query_chemical_formula(group,password,chemical_form)
-    
-    for frag in frag_list:
-        print("frag_id: %s" %(frag))
-        xyz=get_coord_by_frag_id(frag)
+
+    frag_strings = {}
+    for frag_id in frag_list:
+        frag_string = "frag_id: {}\n".format(frag_id)
+        xyz=get_coord_by_frag_id(frag_id)
         for atom in xyz:
-            print(' '.join(map(str,atom)))
+            frag_string = '{}{}\n'.format(frag_string, ' '.join(map(str,atom)))
+        frag_strings[frag_id] = frag_string
+    return frag_strings
     
 #def get_full_efp_parameter(frag_id): 
 

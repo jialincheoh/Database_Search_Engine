@@ -105,15 +105,40 @@ def get_atoms(filename):
     return molecule
 
 
-input_data1 = get_atoms(INPUT_FILE_1)
-# print('--------')
-# print_tree(input_data1)
+def is_isomer(filename1, filename2):
+    input_data1 = get_atoms(filename1)
+    # print('--------')
+    # print_tree(input_data1)
+
+    input_data2 = get_atoms(filename2)
+    # print('--------')
+    # print_tree(input_data2)
+
+    is_iso = is_isomorphic(input_data1, input_data2)
+
+    if is_iso:
+        xyz_data_1 = get_raw_atoms(INPUT_FILE_1 + ".xyz")
+        xyz_data_2 = get_raw_atoms(INPUT_FILE_2 + ".xyz")
+        
+        P = np.array(xyz_data_1)
+        Q = np.array(xyz_data_2)
+
+        print('is a structural isomer')
+        print("RMSD Before Translation: ", rmsd.kabsch_rmsd(P, Q))
+        P -= rmsd.centroid(P)
+        Q -= rmsd.centroid(Q)
+        print("RMSD after translation: ", rmsd.kabsch_rmsd(P, Q))
 
 
-input_data2 = get_atoms(INPUT_FILE_2)
+if __name__ == "__main__":
 
-# print('--------')
-# print_tree(input_data2)
+    is_iso = is_isomer('isomer1', 'isomer2')
+
+    if is_iso:
+        print('is a structural isomer')
+    else:
+        print('NOT an isomer')
+
 
 if is_isomorphic(input_data1, input_data2):
     xyz_data_1 = get_raw_atoms(INPUT_FILE_1 + ".xyz")
