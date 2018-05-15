@@ -1,0 +1,5 @@
+*.py[cod]
+*.xyz
+*.zmat
+*.pdb
+*.out

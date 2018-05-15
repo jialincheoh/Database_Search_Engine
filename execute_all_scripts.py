@@ -1,5 +1,6 @@
 import sys
 
+from angles import get_geom, get_bond_graph, write_zmat
 from pdb2xyz import pdb2xyz
 from Query_V2 import get_coord_from_frag_id_array, query_chemical_formula
 from reading_parameters import get_chem_formula, get_coord
@@ -12,12 +13,22 @@ PASSWORD = 'Terri'
 
 def usage(cmd):
     print("""
-Converts a input.pdb file to input.xyz
+Takes an input.pdb file, converts to input.xyz and looks for isomers
 
-Syntax: python execute_all_scripts.py
+Syntax: python execute_all_scripts.py input.pdb
 """)
 
 
+def get_zmat_filename(xyz_filename):
+    zmat_filename = xyz_filename.replace('.xyz', '.zmat')
+    return zmat_filename
+
+    
+def xyz2zmat(xyz_filename, zmat_filename):
+    geom = get_geom(xyz_filename)
+    bond_graph = get_bond_graph(geom)
+    
+    write_zmat(zmat_filename, geom, bond_graph)
 
 if __name__ == '__main__':
     args = sys.argv[1:]
@@ -38,6 +49,9 @@ if __name__ == '__main__':
     #print('Writing %s' % xyz_filename)
     pdb2xyz(pdb_filename, xyz_filename)
 
+    zmat_filename = get_zmat_filename(xyz_filename)
+    xyz2zmat(xyz_filename, zmat_filename)
+
     # Step 2: Use xyz coordinates to query for efp mysqldb
     formula = get_chem_formula(xyz_filename)
     #formula = "C1366N373S6O389"
@@ -54,9 +68,11 @@ if __name__ == '__main__':
         frag_filename = '{}_frag{}.xyz'.format(filename_base, frag_id)
         with open(frag_filename, 'w') as frag_file:
             frag_file.write(coords[frag_id])
+        frag_zmat_filename = get_zmat_filename(frag_filename)
+        xyz2zmat(frag_filename, frag_zmat_filename)
         # TODO need z-coord files for isomer checking
-        is_iso = is_isomer(xyz_filename, frag_filename)
-        print('{} and {} are structural isomers: {}'.format(xyz_filename, frag_filename, is_iso))
+        is_iso = is_isomer(zmat_filename, frag_zmat_filename)
+        print('{} and {} are structural isomers: {}'.format(zmat_filename, frag_zmat_filename, is_iso))
     
 
     sys.exit(0)

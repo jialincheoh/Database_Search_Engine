@@ -108,8 +108,9 @@ def get_coord_from_frag_id_array(group,password,chemical_form):
 
     frag_strings = {}
     for frag_id in frag_list:
-        frag_string = "frag_id: {}\n".format(frag_id)
         xyz=get_coord_by_frag_id(frag_id)
+        frag_string = '{}\n'.format(len(xyz))
+        frag_string = "{}frag_id: {}\n".format(frag_string, frag_id)
         for atom in xyz:
             frag_string = '{}{}\n'.format(frag_string, ' '.join(map(str,atom)))
         frag_strings[frag_id] = frag_string
