@@ -5,6 +5,8 @@ from pdb2xyz import pdb2xyz
 from Query_V2 import get_coord_from_frag_id_array, query_chemical_formula
 from reading_parameters import get_chem_formula, get_coord
 from structural_isomers import is_isomer
+from isomers import is_isomer as is_stereo_isomer
+from helpers import get_zmat_filename
 
 
 GROUP = 'Slipchenko'
@@ -18,16 +20,11 @@ Takes an input.pdb file, converts to input.xyz and looks for isomers
 Syntax: python execute_all_scripts.py input.pdb
 """)
 
-
-def get_zmat_filename(xyz_filename):
-    zmat_filename = xyz_filename.replace('.xyz', '.zmat')
-    return zmat_filename
-
     
 def xyz2zmat(xyz_filename, zmat_filename):
     geom = get_geom(xyz_filename)
     bond_graph = get_bond_graph(geom)
-    
+
     write_zmat(zmat_filename, geom, bond_graph)
 
 if __name__ == '__main__':
@@ -70,9 +67,15 @@ if __name__ == '__main__':
             frag_file.write(coords[frag_id])
         frag_zmat_filename = get_zmat_filename(frag_filename)
         xyz2zmat(frag_filename, frag_zmat_filename)
+
         # TODO need z-coord files for isomer checking
-        is_iso = is_isomer(zmat_filename, frag_zmat_filename)
-        print('{} and {} are structural isomers: {}'.format(zmat_filename, frag_zmat_filename, is_iso))
+        is_struct_iso = is_isomer(zmat_filename, frag_zmat_filename)
+        print('{} and {} are structural isomers: {}'.format(
+            zmat_filename, frag_zmat_filename, is_struct_iso))
+
+        is_stereo_iso = is_stereo_isomer(zmat_filename, frag_zmat_filename)
+        print('{} and {} are structural isomers: {}'.format(
+            zmat_filename, frag_zmat_filename, is_stereo_iso))
     
 
     sys.exit(0)
