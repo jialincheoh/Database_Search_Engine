@@ -1,5 +1,10 @@
 # isomers
 
+Contributors
+
+Yen Bui
+Jia Lin
+
 ### Setup
 
 Create a python3 virtualenv, e.g.:
