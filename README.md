@@ -2,7 +2,7 @@
 
 Contributors
 
-Yen Bui
+Yen Bui </br> 
 Jia Lin
 
 ### Setup
