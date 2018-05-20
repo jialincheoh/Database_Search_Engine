@@ -1,3 +1,4 @@
+import subprocess
 import sys
 
 from angles import get_geom, get_bond_graph, write_zmat
@@ -7,10 +8,28 @@ from reading_parameters import get_chem_formula, get_coord
 from structural_isomers import is_isomer
 from isomers import is_isomer as is_stereo_isomer
 from helpers import get_zmat_filename
+#from xyz2zmat import xyz2zmat
 
 
 GROUP = 'Slipchenko'
 PASSWORD = 'Terri'
+
+
+def xyz2zmat(xyz_filename, zmat_filename=None):
+    # babel -i xyz water.xyz -o fh water.zmat
+    if not zmat_filename:
+        zmat_filename = get_zmat_filename(xyz_filename)
+    args = [
+        "babel",
+        "-i",
+        "xyz",
+        xyz_filename,
+        "-o",
+        "fh",
+        zmat_filename,
+    ]
+    status = subprocess.check_call(args)
+    print('Converted {} to {}, status={}'.format(xyz_filename, zmat_filename, status))
 
 
 def usage(cmd):
@@ -20,12 +39,6 @@ Takes an input.pdb file, converts to input.xyz and looks for isomers
 Syntax: python execute_all_scripts.py input.pdb
 """)
 
-    
-def xyz2zmat(xyz_filename, zmat_filename):
-    geom = get_geom(xyz_filename)
-    bond_graph = get_bond_graph(geom)
-
-    write_zmat(zmat_filename, geom, bond_graph)
 
 if __name__ == '__main__':
     args = sys.argv[1:]
@@ -68,15 +81,14 @@ if __name__ == '__main__':
         frag_zmat_filename = get_zmat_filename(frag_filename)
         xyz2zmat(frag_filename, frag_zmat_filename)
 
-        # TODO need z-coord files for isomer checking
         is_struct_iso = is_isomer(zmat_filename, frag_zmat_filename)
         print('{} and {} are structural isomers: {}'.format(
             zmat_filename, frag_zmat_filename, is_struct_iso))
 
-        is_stereo_iso = is_stereo_isomer(zmat_filename, frag_zmat_filename)
-        print('{} and {} are structural isomers: {}'.format(
-            zmat_filename, frag_zmat_filename, is_stereo_iso))
-    
+        (is_stereo_iso, rmsd_before, rmsd_after) = is_stereo_isomer(
+            zmat_filename, frag_zmat_filename)
+        print('{} and {} are stereo isomers: {}, rmsd_before={}, rmsd_after={}'.format(
+            zmat_filename, frag_zmat_filename, is_stereo_iso, rmsd_before, rmsd_after))    
 
     sys.exit(0)
 

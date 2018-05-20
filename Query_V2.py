@@ -71,6 +71,11 @@ def get_coord_by_frag_id(id):
     cursor.execute("SELECT coordinates FROM parameters WHERE id=%s;" %(id))
 #    print(cursor.fetchall()[0][0])
     coordstr = cursor.fetchall()[0][0]
+    # ['A01O1      0.0000000000   0.1191094785   0.0000000000  15.9949100  8.0\n',
+    #  'A02H2     -1.4223059670  -0.9451766865   0.0000000000   1.0078250  1.0\n',
+    #  'A03H3      1.4223059670  -0.9451766865   0.0000000000   1.0078250  1.0\n',
+    # 'BO21      -0.7111529835  -0.4130336040   0.0000000000   0.0000000  0.0\n',
+    #  'BO31       0.7111529835  -0.4130336040   0.0000000000   0.0000000  0.0\n']
     testarray = ast.literal_eval(coordstr)
     
     xyz=[]

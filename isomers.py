@@ -3,7 +3,7 @@ import rmsd
 import numpy as np
 import sys
 
-from helpers import get_zmat_filename
+from helpers import get_xyz_filename
 
 
 class Atom:
@@ -141,7 +141,11 @@ def get_atoms(filename):
     # Open the zmat file
     with open(filename) as input_file:
         # Get the first line (This will be the root of the tree)
-        first_line = next(input_file)
+        first_line = ''
+        # Find the first non-blank line in the file
+        while not first_line:
+            first_line = next(input_file)
+            first_line = first_line.strip()
 
         # Create the Atom instance representing the first atom in the file
         molecule = Atom(1, first_line.split()[0])
@@ -177,24 +181,26 @@ def is_isomer(filename1, filename2):
 
     # Check if the two trees are isomorphic
     is_iso = is_isomorphic(input_data1, input_data2)
+    rmsd_before = None
+    rmsd_after = None
 
-    """
     if is_iso:
-        filename_xyz1 = get_zmat_filename(filename1)
+        filename_xyz1 = get_xyz_filename(filename1)
         xyz_data_1 = get_raw_atoms(filename_xyz1)
-        filename_xyz2 = get_zmat_filename(filename1)
+        filename_xyz2 = get_xyz_filename(filename2)
         xyz_data_2 = get_raw_atoms(filename_xyz2)
         
         P = np.array(xyz_data_1)
         Q = np.array(xyz_data_2)
 
-        print("RMSD Before Translation: ", rmsd.kabsch_rmsd(P, Q))
+        rmsd_before = rmsd.kabsch_rmsd(P, Q)
+        #print("RMSD Before Translation: ", rmsd_before)
         P -= rmsd.centroid(P)
         Q -= rmsd.centroid(Q)
-        print("RMSD after translation: ", rmsd.kabsch_rmsd(P, Q))
-    """
+        rmsd_after = rmsd.kabsch_rmsd(P, Q)
+        #print("RMSD after translation: ", rmsd_after)
 
-    return is_iso
+    return (is_iso, rmsd_before, rmsd_after)
 
 
 def usage(cmd):
@@ -216,9 +222,10 @@ if __name__ == '__main__':
     input1 = args[0]
     input2 = args[1]
 
-    is_iso = is_isomer(input1, input2)
+    is_iso, rmsd_before, rmsd_after = is_isomer(input1, input2)
 
     if is_iso:
-        print('is a stereo isomer')
+        print('is a stereo isomer, rmsd_before={}, rmsd_after={}'.format(
+            rmsd_before, rmsd_after))
     else:
         print('NOT an isomer')

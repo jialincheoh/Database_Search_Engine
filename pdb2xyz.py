@@ -4,11 +4,12 @@ import sys
 import scipy as sp
 import re
 
+
 def pdb2xyz(file_in, file_out, metal=False):
     try:
         fin = open(file_in, 'r')
     except IOError:
-        print('Could not read %s.' % filename)
+        print('Could not read %s.' % file_in)
         sys.exit(2)
     
     frames = []

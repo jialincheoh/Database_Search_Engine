@@ -178,7 +178,7 @@ def get_bond_graph(geom):
             covrad2 = cov_rads[at_types[j]]
             thresh = bond_thresh * (covrad1 + covrad2)
             r12 = get_r12(coords[i], coords[j])
-            if (r12 < thresh):
+            if r12 < thresh:
                 bond_graph[i].append(j)
                 bond_graph[j].append(i)
     return bond_graph
