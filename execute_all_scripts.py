@@ -1,14 +1,12 @@
 import subprocess
 import sys
 
-from angles import get_geom, get_bond_graph, write_zmat
 from pdb2xyz import pdb2xyz
-from Query_V2 import get_coord_from_frag_id_array, query_chemical_formula
-from reading_parameters import get_chem_formula, get_coord
+from Query_V2 import get_coord_from_frag_id_array
+from reading_parameters import get_chem_formula
 from structural_isomers import is_isomer
 from isomers import is_isomer as is_stereo_isomer
 from helpers import get_zmat_filename
-#from xyz2zmat import xyz2zmat
 
 
 GROUP = 'Slipchenko'
@@ -16,7 +14,6 @@ PASSWORD = 'Terri'
 
 
 def xyz2zmat(xyz_filename, zmat_filename=None):
-    # babel -i xyz water.xyz -o fh water.zmat
     if not zmat_filename:
         zmat_filename = get_zmat_filename(xyz_filename)
     args = [
