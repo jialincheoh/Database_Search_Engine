@@ -31,6 +31,6 @@ Install requirements:
 3. Run the script:
 	
 	conda activate isomers
-	python execute_all_scripts.py data/<filename>
+	python execute_all_scripts.py data/filename
 
 where filename is the name of the pdb file you want to test
