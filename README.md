@@ -27,10 +27,14 @@ Install requirements:
 ### Usage
 
 1. Find a .pdb file you want to test.
-2. Put it in the ~/Documents/isomers/data/ directory.
+2. Put it in the iSpiEFP_Database_Search_Engine/data/ directory.
+3. Ensure you are in the correct directory with the virtualenv active:
+
+	cd /path/to/iSpiEFP_Database_Search_Engine  # Wherever you cloned the search engine
+	conda activate isomers  # Whatever you called your virtualenv during setup
+
 3. Run the script:
 	
-	conda activate isomers
 	python execute_all_scripts.py data/filename
 
 where filename is the name of the pdb file you want to test
