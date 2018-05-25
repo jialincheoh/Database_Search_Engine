@@ -1,7 +1,7 @@
 import subprocess
 import sys
 
-from pdb2xyz import pdb2xyz
+# from pdb2xyz import pdb2xyz
 from Query_V2 import get_coord_from_frag_id_array
 from reading_parameters import get_chem_formula
 from structural_isomers import is_isomer
