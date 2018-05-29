@@ -31,9 +31,9 @@ def xyz2zmat(xyz_filename, zmat_filename=None):
 
 def usage(cmd):
     print("""
-Takes an input.pdb file, converts to input.xyz and looks for isomers
+Takes an input.xyz file, converts to input.xyz and looks for isomers
 
-Syntax: python execute_all_scripts.py input.pdb
+Syntax: python execute_all_scripts.py input.xyz
 """)
 
 
@@ -41,20 +41,21 @@ if __name__ == '__main__':
     args = sys.argv[1:]
     in_out = []
     if len(args) == 0:
-        print('You need to specify at least one input file (.pdb)')
+        print('You need to specify at least one input file (.xyz)')
         usage(sys.argv[0])
         sys.exit(1)
 
-    pdb_filename = args[0]
-    if not pdb_filename.endswith('.pdb'):
+    xyz_filename = args[0]
+    if not xyz_filename.endswith('.xyz'):
         print('Wrong extension in %s' % pdb_filename)
         sys.exit(2)
     
+    filename_base = xyz_filename[:-4]
+
     # Step 1: convert pdb to xyz
-    filename_base = pdb_filename[:-4]
-    xyz_filename = '{}.xyz'.format(filename_base)
+    #xyz_filename = '{}.xyz'.format(filename_base)
     #print('Writing %s' % xyz_filename)
-    pdb2xyz(pdb_filename, xyz_filename)
+    #pdb2xyz(pdb_filename, xyz_filename)
 
     zmat_filename = get_zmat_filename(xyz_filename)
     xyz2zmat(xyz_filename, zmat_filename)

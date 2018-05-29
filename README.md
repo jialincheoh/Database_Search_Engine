@@ -26,7 +26,7 @@ Install requirements:
 
 ### Usage
 
-1. Find a .pdb file you want to test.
+1. Find a .xyz file you want to test.
 2. Put it in the iSpiEFP_Database_Search_Engine/data/ directory.
 3. Ensure you are in the correct directory with the virtualenv active:
 
@@ -37,4 +37,4 @@ Install requirements:
 	
 	python execute_all_scripts.py data/filename
 
-where filename is the name of the pdb file you want to test
+where filename is the name of the xyz file you want to test
