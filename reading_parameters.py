@@ -98,7 +98,7 @@ def get_chem_formula(file):
     formula={"C":int(C),"H":int(H), "N":int(N), "S":int(S), "O":int(O)}  
     chemicals=""
      
-    for j in formula:
+    for j in sorted (formula.keys()):
         if formula[j] != 0:
             chemicals += j+ str(formula[j])
     
