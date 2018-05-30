@@ -1,10 +1,5 @@
 # isomers
 
-Contributors
-
-Yen Bui </br> 
-Jia Lin
-
 ### Setup
 
 Install open babel:
