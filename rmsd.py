@@ -460,6 +460,25 @@ def get_coordinates_xyz(filename):
     return atoms, V
 
 
+def calculate_rmsd(filename_xyz1, filename_xyz2):
+    from helpers import get_raw_atoms
+
+    xyz_data_1 = get_raw_atoms(filename_xyz1)
+    xyz_data_2 = get_raw_atoms(filename_xyz2)
+
+    P = np.array(xyz_data_1)
+    Q = np.array(xyz_data_2)
+
+    rmsd_before = kabsch_rmsd(P, Q)
+    #print("RMSD Before Translation: ", rmsd_before)
+    P -= centroid(P)
+    Q -= centroid(Q)
+    rmsd_after = kabsch_rmsd(P, Q)
+        #print("RMSD after translation: ", rmsd_after)
+
+    return (rmsd_before, rmsd_after)
+
+
 def main():
 
     import argparse

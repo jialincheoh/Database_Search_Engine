@@ -4,6 +4,7 @@ import sys
 # from pdb2xyz import pdb2xyz
 from Query_V2 import get_coord_from_frag_id_array
 from reading_parameters import get_chem_formula
+import rmsd
 from structural_isomers import is_isomer
 from isomers import is_isomer as is_stereo_isomer
 from helpers import get_zmat_filename
@@ -83,10 +84,13 @@ if __name__ == '__main__':
         print('{} and {} are structural isomers: {}'.format(
             zmat_filename, frag_zmat_filename, is_struct_iso))
 
-        (is_stereo_iso, rmsd_before, rmsd_after) = is_stereo_isomer(
-            zmat_filename, frag_zmat_filename)
-        print('{} and {} are stereo isomers: {}, rmsd_before={}, rmsd_after={}'.format(
-            zmat_filename, frag_zmat_filename, is_stereo_iso, rmsd_before, rmsd_after))    
+        is_stereo_iso = is_stereo_isomer(zmat_filename, frag_zmat_filename)
+        print('{} and {} are stereo isomers: {}'.format(
+            zmat_filename, frag_zmat_filename, is_stereo_iso))
+
+        if is_struct_iso or is_stereo_iso:
+            rmsd_before, rmsd_after = rmsd.calculate_rmsd(frag_filename, xyz_filename)
+            print('rmsd_before={}, rmsd_after={}'.format(rmsd_before, rmsd_after))
 
     sys.exit(0)
 

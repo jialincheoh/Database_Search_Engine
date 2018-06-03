@@ -1,6 +1,5 @@
 import itertools
 import rmsd
-import numpy as np
 import sys
 
 from helpers import get_xyz_filename
@@ -112,22 +111,6 @@ def is_isomorphic(n1, n2):
     return False
 
 
-def get_raw_atoms(filename):
-    atoms = []
-    with open(filename) as input_file:
-        for i, line in enumerate(input_file, 2):
-            line_data = line.split()
-            if len(line_data) != 4:
-                continue
-            atoms.append([
-                float(line_data[1]),
-                float(line_data[2]),
-                float(line_data[3])
-            ])
-        
-    return atoms
-
-
 def get_atoms(filename):
     """ Read a zmat file and construct a tree representing
     the atomic bonds. Each node in the tree is an Atom.
@@ -181,26 +164,8 @@ def is_isomer(filename1, filename2):
 
     # Check if the two trees are isomorphic
     is_iso = is_isomorphic(input_data1, input_data2)
-    rmsd_before = None
-    rmsd_after = None
 
-    if is_iso:
-        filename_xyz1 = get_xyz_filename(filename1)
-        xyz_data_1 = get_raw_atoms(filename_xyz1)
-        filename_xyz2 = get_xyz_filename(filename2)
-        xyz_data_2 = get_raw_atoms(filename_xyz2)
-        
-        P = np.array(xyz_data_1)
-        Q = np.array(xyz_data_2)
-
-        rmsd_before = rmsd.kabsch_rmsd(P, Q)
-        #print("RMSD Before Translation: ", rmsd_before)
-        P -= rmsd.centroid(P)
-        Q -= rmsd.centroid(Q)
-        rmsd_after = rmsd.kabsch_rmsd(P, Q)
-        #print("RMSD after translation: ", rmsd_after)
-
-    return (is_iso, rmsd_before, rmsd_after)
+    return is_iso
 
 
 def usage(cmd):
@@ -219,12 +184,15 @@ if __name__ == '__main__':
         usage(sys.argv[0])
         sys.exit(1)
 
-    input1 = args[0]
-    input2 = args[1]
+    filename1 = args[0]
+    filename2 = args[1]
 
-    is_iso, rmsd_before, rmsd_after = is_isomer(input1, input2)
+    is_iso = is_isomer(filename1, filename2)
 
     if is_iso:
+        filename_xyz1 = get_xyz_filename(filename1)
+        filename_xyz2 = get_xyz_filename(filename2)
+        rmsd_before, rmsd_after = rmsd.calculate_rmsd(filename_xyz1, filename_xyz2)
         print('is a stereo isomer, rmsd_before={}, rmsd_after={}'.format(
             rmsd_before, rmsd_after))
     else:

@@ -1,3 +1,5 @@
+*.c
+*.save*
 *.py[cod]
 *.xyz
 *.zmat
