@@ -6,3 +6,4 @@
 *.pdb
 *.out
 .idea/*
+data/*
