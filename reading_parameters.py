@@ -8,12 +8,11 @@ import datetime
 import sys
 import mysql
 import mysql.connector
+from credentials import DATABASE
 
-db = mysql.connector.connect(host="ssi-db.cllylwkcavdc.us-east-2.rds.amazonaws.com",
-                         user="lslipche",
-                         passwd="29221627",
-                         db="SSI_test")
-cur = db.cursor()
+
+cnx = mysql.connector.connect(**DATABASE)
+cur = cnx.cursor()
 
 
 # In[4]:
@@ -153,11 +152,8 @@ def ensure_str(s):
 
 def query(string):
     
-    db = mysql.connector.connect(host="ssi-db.cllylwkcavdc.us-east-2.rds.amazonaws.com",
-                         user="lslipche",
-                         passwd="29221627",
-                         db="SSI_test")
-    cur = db.cursor()
+    cnx = mysql.connector.connect(**DATABASE)
+    cur = cnx.cursor()
     #string=str(sys.argv[1])
     string="SELECT chemicalformula,coordinates FROM SSI_sub"
     
@@ -553,11 +549,8 @@ type(get_screen(parameter))
 
 
 def query_2(get_coordinates):
-    db = mysql.connector.connect(host="ssi-db.cllylwkcavdc.us-east-2.rds.amazonaws.com",
-                         user="lslipche",
-                         passwd="29221627",
-                         db="SSI_test")
-    cur = db.cursor()
+    cnx = mysql.connector.connect(**DATABASE)
+    cur = cnx.cursor()
     #string=str(sys.argv[1])
     string="SELECT chemicalformula FROM SSI_sub"
     

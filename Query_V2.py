@@ -6,6 +6,7 @@ import mysql
 import mysql.connector
 from mysql.connector import errorcode
 import ast
+from credentials import DATABASE
 
 
 # coding: utf-8
@@ -217,9 +218,7 @@ def return_frag_full_parameter(frag_id):
 #connecting to MySQL
 
 #db = connection object
-cnx = mysql.connector.connect(host="ssi-db.cllylwkcavdc.us-east-2.rds.amazonaws.com",
-                         user="lslipche",
-                         passwd="29221627", database='TEMP')
+cnx = mysql.connector.connect(**DATABASE)
 cursor = cnx.cursor()
 
 """
