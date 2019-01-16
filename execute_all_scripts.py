@@ -8,31 +8,17 @@ import rmsd
 from structural_isomers import is_isomer
 from isomers import is_isomer as is_stereo_isomer
 from helpers import get_zmat_filename
+from xyz2zmat_babel import xyz2zmat
 
 
 GROUP = 'Slipchenko'
 PASSWORD = 'Terri'
 
 
-def xyz2zmat(xyz_filename, zmat_filename=None):
-    if not zmat_filename:
-        zmat_filename = get_zmat_filename(xyz_filename)
-    args = [
-        "babel",
-        "-i",
-        "xyz",
-        xyz_filename,
-        "-o",
-        "fh",
-        zmat_filename,
-    ]
-    status = subprocess.check_call(args)
-    print('Converted {} to {}, status={}'.format(xyz_filename, zmat_filename, status))
-
-
 def usage(cmd):
+    # Takes an input.pdb file, converts to input.xyz and looks for isomers
     print("""
-Takes an input.xyz file, converts to input.xyz and looks for isomers
+Takes an input.xyz file and looks for isomers
 
 Syntax: python execute_all_scripts.py input.xyz
 """)
@@ -48,7 +34,7 @@ if __name__ == '__main__':
 
     xyz_filename = args[0]
     if not xyz_filename.endswith('.xyz'):
-        print('Wrong extension in %s' % pdb_filename)
+        print('Wrong extension in %s' % xyz_filename)
         sys.exit(2)
     
     filename_base = xyz_filename[:-4]
