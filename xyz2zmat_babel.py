@@ -14,6 +14,6 @@ def xyz2zmat(xyz_filename, zmat_filename=None):
         "fh",
         zmat_filename,
     ]
+    #print(' '.join(args))
     status = subprocess.check_call(args)
-    print('Converted {} to {}, status={}'.format(xyz_filename, zmat_filename, status))
-
+    #print('Converted {} to {}, status={}'.format(xyz_filename, zmat_filename, status))
