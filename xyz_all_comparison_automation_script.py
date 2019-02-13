@@ -18,6 +18,19 @@ def get_search_path(data_dir, extension):
     return path_to_search
 
 
+def get_base_filename(file_path):
+    filename_parts = os.path.split(file_path)
+    filename = filename_parts[-1]
+    return filename
+
+
+def get_xyz_file_path(xyz_dir, zmat_file_path):
+    zmat_filename = get_base_filename(zmat_file_path)
+    xyz_filename = get_xyz_filename(zmat_filename)
+    xyz_file_path = os.path.join(xyz_dir, xyz_filename)
+    return xyz_file_path
+
+
 def convert_all_xyz_to_zmat(xyz_data_dir, zmat_data_dir):
 
     # Attempt to make zmat output dir
@@ -32,8 +45,7 @@ def convert_all_xyz_to_zmat(xyz_data_dir, zmat_data_dir):
     path_to_search = get_search_path(xyz_data_dir, XYZ_EXTENSION)
     xyz_files = glob.glob(path_to_search)
     for xyz_file_path in xyz_files:
-        filename_parts = os.path.split(xyz_file_path)
-        xyz_filename = filename_parts[-1]
+        xyz_filename = get_base_filename(xyz_file_path)
 
         filename_base, ext = os.path.splitext(xyz_filename)
         #print('Converting', filename_base, ext)
@@ -60,7 +72,7 @@ Syntax: python xyz_all_comparison_automation_script.py ./xyz_input_data ./zmat_o
 """)
 
 
-if __name__ == '__main__':
+def main():
     args = sys.argv[1:]
     in_out = []
     if len(args) != 2:
@@ -77,31 +89,33 @@ if __name__ == '__main__':
     xyz_data_dir = args[0]
     zmat_data_dir = args[1]
 
-    #convert_all_xyz_to_zmat(xyz_data_dir, zmat_data_dir)
+    convert_all_xyz_to_zmat(xyz_data_dir, zmat_data_dir)
 
     # For each pair of zmat files, check isomers and calculate rmsd
 
     path_to_search = get_search_path(zmat_data_dir, ZMAT_EXTENSION)
     zmat_files = glob.glob(path_to_search)
 
-    #pairs = [(zmat_files[0], zmat_files[1])]
-    #print(pairs)
     pairs = list(itertools.combinations(zmat_files, 2))
 
-    for zmat_filename, other_zmat_filename in pairs:
+    for zmat_file_path, other_zmat_file_path in pairs:
 
-        is_struct_iso = is_isomer(zmat_filename, other_zmat_filename)
+        is_struct_iso = is_isomer(zmat_file_path, other_zmat_file_path)
 
-        is_stereo_iso = is_stereo_isomer(zmat_filename, other_zmat_filename)
+        is_stereo_iso = is_stereo_isomer(zmat_file_path, other_zmat_file_path)
 
         rmsd_before = 'N/A'
         rmsd_after = 'N/A'
         if is_struct_iso or is_stereo_iso:
-            xyz_filename = get_xyz_filename(zmat_filename)
-            other_xyz_filename = get_xyz_filename(other_zmat_filename)
+            xyz_filename = get_xyz_file_path(xyz_data_dir, zmat_file_path)
+            other_xyz_filename = get_xyz_file_path(xyz_data_dir, other_zmat_file_path)
             rmsd_before, rmsd_after = rmsd.calculate_rmsd(other_xyz_filename, xyz_filename)
 
         print('{}, {}, structural isomer: {}, stereo isomer: {}, rmsd_before={}, rmsd_after={}'.format(
-            zmat_filename, other_zmat_filename, is_struct_iso, is_stereo_iso, rmsd_before, rmsd_after))
+            get_base_filename(zmat_file_path), get_base_filename(other_zmat_file_path), 
+            is_struct_iso, is_stereo_iso, rmsd_before, rmsd_after))
 
     sys.exit(0)
+
+if __name__ == '__main__':
+    main()
